@@ -1,8 +1,13 @@
-x,y = map(int, input().split())
-seq = input().strip()
+n, t = map(int, input().split())
+s = list(input().strip())
 
-li = [seq[i] for i in range(0,len(seq))]
+for _ in range(t):
+    i = 0
+    while i < n - 1:
+        if s[i] == 'B' and s[i+1] == 'G':
+            s[i], s[i+1] = s[i+1], s[i]
+            i += 2   # skip next
+        else:
+            i += 1
 
-li[x-1],li[y-1] = li[y-1],li[x-1]
-final_seq = ''.join(li)
-print(final_seq)
+print("".join(s))
