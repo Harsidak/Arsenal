@@ -30,3 +30,13 @@ int main() {
 
     return 0;
 }
+
+// if we create a variable by both local and global scope
+int globalVar = 10; // global variable
+
+int main() {
+    int localVar = 20; // local variable
+    printf("Global variable: %d\n", globalVar);
+    printf("Local variable: %d\n", localVar);
+    return 0;
+}
