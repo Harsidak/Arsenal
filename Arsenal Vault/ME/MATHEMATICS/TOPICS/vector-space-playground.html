@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Space Interactive Playground</title>
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-deep: #080c14;
+            --bg-card: rgba(18, 26, 46, 0.65);
+            --bg-card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #10b981; /* Emerald Green for Vector u */
+            --secondary: #06b6d4; /* Electric Cyan for Vector v */
+            --accent: #d946ef; /* Hot Pink/Purple for Resultants */
+            --accent-glow: rgba(217, 70, 239, 0.4);
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --grid-color: rgba(255, 255, 255, 0.04);
+            --axis-color: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(180deg, rgba(13, 20, 38, 0.8) 0%, rgba(8, 12, 20, 0) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #d946ef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-area p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-top: 0.25rem;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            padding: 1.5rem;
+            gap: 1.5rem;
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Sidebar Control Panel */
+        .sidebar {
+            flex: 0 0 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: auto;
+            max-height: calc(100vh - 120px);
+            padding-right: 0.25rem;
+        }
+
+        /* Custom Scrollbar for Sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.5rem;
+        }
+
+        .card-title span {
+            font-size: 1.25rem;
+        }
+
+        /* Radio Mode Selector Group */
+        .mode-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .mode-option {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-option:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .mode-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .mode-label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            padding-left: 1.75rem;
+        }
+
+        .mode-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .mode-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Custom Radio Button Dot */
+        .mode-option::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--text-muted);
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .mode-option input:checked + .mode-label .mode-name {
+            color: #ffffff;
+        }
+
+        .mode-option:has(input:checked) {
+            background: rgba(6, 182, 212, 0.08);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.1);
+        }
+
+        .mode-option:has(input:checked)::before {
+            border-color: var(--secondary);
+            background: var(--secondary);
+            box-shadow: 0 0 6px var(--secondary);
+        }
+
+        /* Sliders / Controls */
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .slider-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .slider-value {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            transition: background 0.3s ease;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 0 8px var(--accent-glow);
+            transition: transform 0.1s ease, background 0.3s ease;
+        }
+
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .range-slider.u-slider::-webkit-slider-thumb {
+            background: var(--primary);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+        }
+
+        .range-slider.v-slider::-webkit-slider-thumb {
+            background: var(--secondary);
+            box-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
+        }
+
+        /* Readout Equations */
+        .equation-box {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            overflow-x: auto;
+        }
+
+        .eq-line {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            white-space: nowrap;
+        }
+
+        .eq-u { color: var(--primary); font-weight: 600; }
+        .eq-v { color: var(--secondary); font-weight: 600; }
+        .eq-res { color: var(--accent); font-weight: 600; }
+        .eq-scalar { color: #facc15; font-weight: 600; } /* yellow */
+
+        /* Canvas Area Container */
+        .workspace {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 20px;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            min-height: 500px;
+        }
+
+        #vector-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            display: block;
+        }
+
+        /* Floating Overlay controls inside workspace */
+        .canvas-overlay {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            pointer-events: none;
+        }
+
+        .canvas-btn {
+            pointer-events: auto;
+            background: rgba(18, 26, 46, 0.85);
+            border: 1px solid var(--bg-card-border);
+            color: var(--text-main);
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .canvas-btn:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .canvas-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Explainers and Alerts */
+        .explainer-card {
+            font-size: 0.825rem;
+            line-height: 1.45;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .highlight-text {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        /* Status & Tooltip banner */
+        .statusBar {
+            padding: 0.85rem 1.5rem;
+            background: rgba(8, 12, 20, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .statusBar span {
+            font-family: var(--font-mono);
+        }
+
+        /* Color badges */
+        .color-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.25rem;
+        }
+        .dot-u { background: var(--primary); box-shadow: 0 0 6px var(--primary); }
+        .dot-v { background: var(--secondary); box-shadow: 0 0 6px var(--secondary); }
+        .dot-res { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+
+        /* Animation utilities */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); box-shadow: 0 0 12px var(--accent); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse-btn {
+            animation: pulse 2s infinite ease-in-out;
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+        .pulse-btn:hover {
+            background: #e04df5;
+        }
+
+        /* Responsive Layout adjustment */
+        @media (max-width: 968px) {
+            .container {
+                flex-direction: column;
+                max-height: none;
+            }
+            .sidebar {
+                flex: none;
+                width: 100%;
+                max-height: none;
+            }
+            .workspace {
+                height: 550px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>🌀 Vector Space Playground</h1>
+            <p>Interactive Exploration of Inner & Outer Operations</p>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono);">
+            Axiom Engine v1.0.0
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Sidebar Controls -->
+        <div class="sidebar">
+            
+            <!-- Mode Selector -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <span>🕹️</span> Choose Demonstration
+                </div>
+                <div class="mode-selector">
+                    <label class="mode-option">
+                        <input type="radio" name="playMode" value="free" checked>
+                        <div class="mode-label">
+                            <div class="mode-name">Free Play / Vector Addition</div>
+                            <div class="mode-desc">Drag vectors u & v. See the tip-to-tail parallelogram.</div>
+                        </div>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="playMode" value="scalar">
+                        <div class="mode-label">
+                            <div class="mode-name">Outer Operation: Scaling</div>
+                            <div class="mode-desc">Multiply vector u by scalar λ to stretch or flip it.</div>
+                        </div>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="playMode" value="distributivity">
+                        <div class="mode-label">
+                            <div class="mode-name">Axiom 2: Distributivity</div>
+                            <div class="mode-desc">Verify λ·(u + v) = λ·u + λ·v step-by-step.</div>
+                        </div>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="playMode" value="associativity">
+                        <div class="mode-label">
+                            <div class="mode-name">Axiom 3: Outer Associativity</div>
+                            <div class="mode-desc">Verify λ·(ψ·u) = (λψ)·u scaling operations.</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Parameters Panel -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <span>🎛️</span> Parameter Tuning
+                </div>
+                <div class="control-group">
+                    
+                    <!-- Scalar Lambda Slider -->
+                    <div class="slider-wrapper" id="lambda-container">
+                        <div class="slider-header">
+                            <span class="slider-name">
+                                <span class="eq-scalar">λ</span> (Primary Scalar)
+                            </span>
+                            <span class="slider-value" id="lambda-val">1.5</span>
+                        </div>
+                        <input type="range" class="range-slider" id="lambda-slider" min="-3" max="3" step="0.1" value="1.5">
+                    </div>
+
+                    <!-- Scalar Psi Slider (Only active in Associativity mode) -->
+                    <div class="slider-wrapper" id="psi-container" style="display: none;">
+                        <div class="slider-header">
+                            <span class="slider-name">
+                                <span class="eq-scalar" style="color: #60a5fa;">ψ</span> (Secondary Scalar)
+                            </span>
+                            <span class="slider-value" id="psi-val">0.8</span>
+                        </div>
+                        <input type="range" class="range-slider" id="psi-slider" style="background: rgba(96, 165, 250, 0.1);" min="-3" max="3" step="0.1" value="0.8">
+                    </div>
+
+                    <!-- Vector Coordinates Readout -->
+                    <div class="equation-box" id="vector-coords">
+                        <div class="eq-line">
+                            <span class="color-dot dot-u"></span>
+                            <span class="eq-u">u</span> = (<span id="u-x-val">3</span>, <span id="u-y-val">2</span>)
+                        </div>
+                        <div class="eq-line" id="coord-v-line">
+                            <span class="color-dot dot-v"></span>
+                            <span class="eq-v">v</span> = (<span id="v-x-val">-1</span>, <span id="v-y-val">3</span>)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Calculation Panel -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <span>🧮</span> Live Mathematical Verification
+                </div>
+                <div class="equation-box" id="math-verification">
+                    <!-- Dynamic math text will go here -->
+                </div>
+            </div>
+
+            <!-- Conceptual Explainer -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <span>💡</span> Vector Space Intuition
+                </div>
+                <div class="explainer-card" id="conceptual-text">
+                    <!-- Dynamic intuition helper based on current mode -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Interactive Workspace -->
+        <div class="workspace">
+            <canvas id="vector-canvas"></canvas>
+            
+            <div class="canvas-overlay">
+                <button class="canvas-btn" id="reset-btn">🔄 Reset Grid</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Status Bar Footer -->
+    <div class="statusBar">
+        <div>💡 Drag the colored vector heads <span class="eq-u">u</span> and <span class="eq-v">v</span> anywhere on the grid!</div>
+        <div>Coordinates: <span id="mouse-coords">(x: 0, y: 0)</span></div>
+    </div>
+
+    <!-- Playground Interactive Logic -->
+    <script>
+        const canvas = document.getElementById('vector-canvas');
+        const ctx = canvas.getContext('2d');
+        const resetBtn = document.getElementById('reset-btn');
+        const lambdaSlider = document.getElementById('lambda-slider');
+        const lambdaVal = document.getElementById('lambda-val');
+        const psiSlider = document.getElementById('psi-slider');
+        const psiVal = document.getElementById('psi-val');
+        const mouseCoords = document.getElementById('mouse-coords');
+
+        const uXVal = document.getElementById('u-x-val');
+        const uYVal = document.getElementById('u-y-val');
+        const vXVal = document.getElementById('v-x-val');
+        const vYVal = document.getElementById('v-y-val');
+
+        const lambdaContainer = document.getElementById('lambda-container');
+        const psiContainer = document.getElementById('psi-container');
+        const coordVLine = document.getElementById('coord-v-line');
+        const mathVerification = document.getElementById('math-verification');
+        const conceptualText = document.getElementById('conceptual-text');
+
+        // State variables
+        let playMode = 'free'; // 'free', 'scalar', 'distributivity', 'associativity'
+        let scale = 40; // Pixels per unit
+        let origin = { x: 0, y: 0 };
+        let isDragging = null; // 'u' or 'v'
+
+        // Mathematical vectors (Grid Coordinates)
+        let vectorU = { x: 3, y: 2 };
+        let vectorV = { x: -2, y: 3 };
+        let lambda = parseFloat(lambdaSlider.value);
+        let psi = parseFloat(psiSlider.value);
+
+        // Resize Canvas to fit its layout container
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            origin.x = rect.width / 2;
+            origin.y = rect.height / 2;
+            draw();
+        }
+
+        // Initialize and bind canvas sizing
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Reset Vectors to clean initial configuration
+        function resetVectors() {
+            vectorU = { x: 3, y: 2 };
+            vectorV = { x: -2, y: 3 };
+            lambdaSlider.value = 1.5;
+            psiSlider.value = 0.8;
+            lambda = 1.5;
+            psi = 0.8;
+            lambdaVal.textContent = '1.5';
+            psiVal.textContent = '0.8';
+            updateUI();
+            draw();
+        }
+        resetBtn.addEventListener('click', resetVectors);
+
+        // Detect current selected mode
+        document.querySelectorAll('input[name="playMode"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                playMode = e.target.value;
+                updateModeSettings();
+                updateUI();
+                draw();
+            });
+        });
+
+        // Toggle elements visibility based on mode
+        function updateModeSettings() {
+            if (playMode === 'free') {
+                lambdaContainer.style.display = 'none';
+                psiContainer.style.display = 'none';
+                coordVLine.style.display = 'flex';
+            } else if (playMode === 'scalar') {
+                lambdaContainer.style.display = 'flex';
+                psiContainer.style.display = 'none';
+                coordVLine.style.display = 'none';
+            } else if (playMode === 'distributivity') {
+                lambdaContainer.style.display = 'flex';
+                psiContainer.style.display = 'none';
+                coordVLine.style.display = 'flex';
+            } else if (playMode === 'associativity') {
+                lambdaContainer.style.display = 'flex';
+                psiContainer.style.display = 'flex';
+                coordVLine.style.display = 'none';
+            }
+        }
+
+        // Live math readout text updater
+        function updateUI() {
+            uXVal.textContent = vectorU.x.toFixed(1);
+            uYVal.textContent = vectorU.y.toFixed(1);
+            vXVal.textContent = vectorV.x.toFixed(1);
+            vYVal.textContent = vectorV.y.toFixed(1);
+            lambdaVal.textContent = lambda.toFixed(1);
+            psiVal.textContent = psi.toFixed(1);
+
+            let mathHtml = '';
+            let intuitionHtml = '';
+
+            if (playMode === 'free') {
+                const sumX = vectorU.x + vectorV.x;
+                const sumY = vectorU.y + vectorV.y;
+                mathHtml = `
+                    <div class="eq-line"><span class="highlight-text">Inner Operation (Addition)</span></div>
+                    <div class="eq-line"><span class="eq-u">u</span> = (${vectorU.x.toFixed(1)}, ${vectorU.y.toFixed(1)})</div>
+                    <div class="eq-line"><span class="eq-v">v</span> = (${vectorV.x.toFixed(1)}, ${vectorV.y.toFixed(1)})</div>
+                    <div style="border-top:1px solid rgba(255,255,255,0.05); margin: 4px 0;"></div>
+                    <div class="eq-line">
+                        <span class="eq-res">u + v</span> = 
+                        (${vectorU.x.toFixed(1)} + (${vectorV.x.toFixed(1)}), 
+                         ${vectorU.y.toFixed(1)} + (${vectorV.y.toFixed(1)}))
+                    </div>
+                    <div class="eq-line">
+                        <span class="eq-res">u + v</span> = <span class="eq-res">(${sumX.toFixed(1)}, ${sumY.toFixed(1)})</span>
+                    </div>
+                `;
+                intuitionHtml = `
+                    <p><span class="highlight-text">Vector Addition</span> acts as the group's "Inner Operation."</p>
+                    <p style="margin-top:0.4rem;">Adding vectors combines their displacements tip-to-tail. Drag either arrowhead to see how the resultant vector sum (<span class="eq-res">u + v</span>) changes instantly.</p>
+                `;
+            } else if (playMode === 'scalar') {
+                const scaleX = vectorU.x * lambda;
+                const scaleY = vectorU.y * lambda;
+                mathHtml = `
+                    <div class="eq-line"><span class="highlight-text">Outer Operation (Scaling)</span></div>
+                    <div class="eq-line"><span class="eq-scalar">λ</span> = ${lambda.toFixed(1)}</div>
+                    <div class="eq-line"><span class="eq-u">u</span> = (${vectorU.x.toFixed(1)}, ${vectorU.y.toFixed(1)})</div>
+                    <div style="border-top:1px solid rgba(255,255,255,0.05); margin: 4px 0;"></div>
+                    <div class="eq-line">
+                        <span class="eq-res">λ · u</span> = 
+                        (${lambda.toFixed(1)} · ${vectorU.x.toFixed(1)}, 
+                         ${lambda.toFixed(1)} · ${vectorU.y.toFixed(1)})
+                    </div>
+                    <div class="eq-line">
+                        <span class="eq-res">λ · u</span> = <span class="eq-res">(${scaleX.toFixed(1)}, ${scaleY.toFixed(1)})</span>
+                    </div>
+                `;
+                intuitionHtml = `
+                    <p><span class="highlight-text">Scalar Multiplication</span> is the "Outer Operation."</p>
+                    <p style="margin-top:0.4rem;">It scales a vector by bringing in an outsider (a real scalar number). When <span class="eq-scalar">λ &gt; 1</span>, the vector stretches; when <span class="eq-scalar">0 &lt; λ &lt; 1</span>, it shrinks; when <span class="eq-scalar">λ &lt; 0</span>, it reverses direction (flips across the origin).</p>
+                `;
+            } else if (playMode === 'distributivity') {
+                const addThenScaleX = lambda * (vectorU.x + vectorV.x);
+                const addThenScaleY = lambda * (vectorU.y + vectorV.y);
+                const scaleU_X = lambda * vectorU.x;
+                const scaleU_Y = lambda * vectorU.y;
+                const scaleV_X = lambda * vectorV.x;
+                const scaleV_Y = lambda * vectorV.y;
+                const scaleThenAddX = scaleU_X + scaleV_X;
+                const scaleThenAddY = scaleU_Y + scaleV_Y;
+
+                mathHtml = `
+                    <div class="eq-line"><span class="highlight-text">Rule: λ·(u + v) = λ·u + λ·v</span></div>
+                    <div class="eq-line"><span class="highlight-text" style="color:var(--accent);">Path A: Scale the Sum</span></div>
+                    <div class="eq-line">
+                        <span>λ·(u + v)</span> = ${lambda.toFixed(1)} · (${(vectorU.x + vectorV.x).toFixed(1)}, ${(vectorU.y + vectorV.y).toFixed(1)})
+                    </div>
+                    <div class="eq-line">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span class="eq-res">(${addThenScaleX.toFixed(1)}, ${addThenScaleY.toFixed(1)})</span>
+                    </div>
+                    <div style="border-top:1px dashed rgba(255,255,255,0.05); margin: 4px 0;"></div>
+                    <div class="eq-line"><span class="highlight-text" style="color:#facc15;">Path B: Sum the Scaled</span></div>
+                    <div class="eq-line">
+                        <span>λ·u + λ·v</span> = (${scaleU_X.toFixed(1)}, ${scaleU_Y.toFixed(1)}) + (${scaleV_X.toFixed(1)}, ${scaleV_Y.toFixed(1)})
+                    </div>
+                    <div class="eq-line">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span style="color:#facc15; font-weight:600;">(${scaleThenAddX.toFixed(1)}, ${scaleThenAddY.toFixed(1)})</span>
+                    </div>
+                `;
+                intuitionHtml = `
+                    <p><span class="highlight-text">Distributivity</span> guarantees mathematical consistency.</p>
+                    <p style="margin-top:0.4rem;">Stretching the final combined displacement (Path A) is exactly equivalent to stretching each constituent component before combining them (Path B). There are zero geometric discrepancies.</p>
+                `;
+            } else if (playMode === 'associativity') {
+                const psiU_X = psi * vectorU.x;
+                const psiU_Y = psi * vectorU.y;
+                const doubleScaleX = lambda * psiU_X;
+                const doubleScaleY = lambda * psiU_Y;
+                const prodX = (lambda * psi) * vectorU.x;
+                const prodY = (lambda * psi) * vectorU.y;
+
+                mathHtml = `
+                    <div class="eq-line"><span class="highlight-text">Rule: λ·(ψ·u) = (λψ)·u</span></div>
+                    <div class="eq-line"><span class="highlight-text" style="color:var(--accent);">Sequential Scaling</span></div>
+                    <div class="eq-line">
+                        <span>λ·(ψ·u)</span> = ${lambda.toFixed(1)} · (${psiU_X.toFixed(1)}, ${psiU_Y.toFixed(1)})
+                    </div>
+                    <div class="eq-line">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span class="eq-res">(${doubleScaleX.toFixed(1)}, ${doubleScaleY.toFixed(1)})</span>
+                    </div>
+                    <div style="border-top:1px dashed rgba(255,255,255,0.05); margin: 4px 0;"></div>
+                    <div class="eq-line"><span class="highlight-text" style="color:#60a5fa;">Direct Product Scaling</span></div>
+                    <div class="eq-line">
+                        <span>(λ·ψ)</span> = (${(lambda * psi).toFixed(2)})
+                    </div>
+                    <div class="eq-line">
+                        <span>(λψ)·u</span> = ${(lambda * psi).toFixed(2)} · (${vectorU.x.toFixed(1)}, ${vectorU.y.toFixed(1)})
+                    </div>
+                    <div class="eq-line">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span style="color:#60a5fa; font-weight:600;">(${prodX.toFixed(1)}, ${prodY.toFixed(1)})</span>
+                    </div>
+                `;
+                intuitionHtml = `
+                    <p><span class="highlight-text">Associativity of Scaling</span> allows batching computations.</p>
+                    <p style="margin-top:0.4rem;">Applying two scaling operations sequentially is identical to multiplying the scalars together first, then applying them in a single step. Highly optimized vector scaling is possible because of this.</p>
+                `;
+            }
+
+            mathVerification.innerHTML = mathHtml;
+            conceptualText.innerHTML = intuitionHtml;
+        }
+
+        // Draw functions
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const w = canvas.width / window.devicePixelRatio;
+            const h = canvas.height / window.devicePixelRatio;
+
+            ctx.lineWidth = 1;
+
+            // Dotted fine grid
+            ctx.strokeStyle = varColor('--grid-color');
+            ctx.beginPath();
+            // Vertical grid lines
+            for (let x = origin.x % scale; x < w; x += scale) {
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
+            }
+            // Horizontal grid lines
+            for (let y = origin.y % scale; y < h; y += scale) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+            }
+            ctx.stroke();
+
+            // Main coordinate axes
+            ctx.strokeStyle = varColor('--axis-color');
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            // X Axis
+            ctx.moveTo(0, origin.y);
+            ctx.lineTo(w, origin.y);
+            // Y Axis
+            ctx.moveTo(origin.x, 0);
+            ctx.lineTo(origin.x, h);
+            ctx.stroke();
+
+            // Numbers on axis
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.font = '10px "Fira Code", monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+
+            // X-ticks
+            for (let offset = scale; origin.x + offset < w; offset += scale) {
+                const xVal = (offset / scale).toFixed(0);
+                ctx.fillText(xVal, origin.x + offset, origin.y + 4);
+                ctx.fillText('-' + xVal, origin.x - offset, origin.y + 4);
+            }
+            // Y-ticks
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for (let offset = scale; origin.y + offset < h; offset += scale) {
+                const yVal = (offset / scale).toFixed(0);
+                ctx.fillText('-' + yVal, origin.x - 6, origin.y + offset);
+                ctx.fillText(yVal, origin.x - 6, origin.y - offset);
+            }
+        }
+
+        // Read CSS variables
+        function varColor(cssVarName) {
+            return getComputedStyle(document.documentElement).getPropertyValue(cssVarName).trim();
+        }
+
+        // Draw a glowing vector arrow on the canvas
+        function drawVector(from, to, color, label = '', lineWidth = 3.5, dashPattern = []) {
+            const pixelFrom = gridToPixel(from);
+            const pixelTo = gridToPixel(to);
+
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = lineWidth;
+            
+            if (dashPattern.length > 0) {
+                ctx.setLineDash(dashPattern);
+            }
+
+            // Glow effect filter (only for key vector outputs)
+            if (lineWidth > 2 && dashPattern.length === 0) {
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 8;
+            }
+
+            ctx.beginPath();
+            ctx.moveTo(pixelFrom.x, pixelFrom.y);
+            ctx.lineTo(pixelTo.x, pixelTo.y);
+            ctx.stroke();
+
+            // Reset glow before drawing arrow head
+            ctx.shadowBlur = 0;
+            ctx.setLineDash([]);
+
+            // Draw Vector Arrow Head
+            const angle = Math.atan2(pixelTo.y - pixelFrom.y, pixelTo.x - pixelFrom.x);
+            const arrowLength = 12;
+            const arrowWidth = 7;
+
+            ctx.beginPath();
+            ctx.moveTo(pixelTo.x, pixelTo.y);
+            ctx.lineTo(
+                pixelTo.x - arrowLength * Math.cos(angle) + arrowWidth * Math.sin(angle),
+                pixelTo.y - arrowLength * Math.sin(angle) - arrowWidth * Math.cos(angle)
+            );
+            ctx.lineTo(
+                pixelTo.x - arrowLength * Math.cos(angle) - arrowWidth * Math.sin(angle),
+                pixelTo.y - arrowLength * Math.sin(angle) + arrowWidth * Math.cos(angle)
+            );
+            ctx.closePath();
+            ctx.fill();
+
+            // Draw Text Label slightly offset from the head
+            if (label) {
+                ctx.font = 'bold 13px "Plus Jakarta Sans", sans-serif';
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowColor = 'rgba(0,0,0,0.8)';
+                ctx.shadowBlur = 4;
+                
+                const labelDist = 20;
+                const lx = pixelTo.x + labelDist * Math.cos(angle + 0.15);
+                const ly = pixelTo.y + labelDist * Math.sin(angle + 0.15);
+                ctx.fillText(label, lx, ly);
+            }
+
+            ctx.restore();
+        }
+
+        // Draw an interactive handle dot at vector tip for dragging
+        function drawDraggableHandle(pos, color) {
+            const pix = gridToPixel(pos);
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(pix.x, pix.y, 7, 0, 2 * Math.PI);
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = color;
+            ctx.shadowBlur = 10;
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(pix.x, pix.y, 4, 0, 2 * Math.PI);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Main scene renderer loop
+        function draw() {
+            drawGrid();
+
+            const zeroVec = { x: 0, y: 0 };
+
+            if (playMode === 'free') {
+                // Draw Vector u & v
+                drawVector(zeroVec, vectorU, varColor('--primary'), 'u');
+                drawVector(zeroVec, vectorV, varColor('--secondary'), 'v');
+
+                // Parallelogram Guide
+                const sumVec = { x: vectorU.x + vectorV.x, y: vectorU.y + vectorV.y };
+                drawVector(vectorU, sumVec, 'rgba(6, 182, 212, 0.4)', '', 1.5, [4, 4]);
+                drawVector(vectorV, sumVec, 'rgba(16, 185, 129, 0.4)', '', 1.5, [4, 4]);
+
+                // Resultant u + v
+                drawVector(zeroVec, sumVec, varColor('--accent'), 'u + v');
+
+                // Draggable heads
+                drawDraggableHandle(vectorU, varColor('--primary'));
+                drawDraggableHandle(vectorV, varColor('--secondary'));
+
+            } else if (playMode === 'scalar') {
+                // Original vector u
+                drawVector(zeroVec, vectorU, 'rgba(255, 255, 255, 0.25)', 'u', 2, [3, 3]);
+
+                // Scaled vector λ·u
+                const scaledU = { x: vectorU.x * lambda, y: vectorU.y * lambda };
+                drawVector(zeroVec, scaledU, varColor('--primary'), 'λ · u');
+
+                // Draggable head for original u
+                drawDraggableHandle(vectorU, varColor('--primary'));
+
+            } else if (playMode === 'distributivity') {
+                // Draw u & v
+                drawVector(zeroVec, vectorU, 'rgba(16, 185, 129, 0.4)', 'u', 2);
+                drawVector(zeroVec, vectorV, 'rgba(6, 182, 212, 0.4)', 'v', 2);
+
+                const sumVec = { x: vectorU.x + vectorV.x, y: vectorU.y + vectorV.y };
+
+                // Draw Path A: λ·(u + v)
+                // Draw the dashed guides for sum first
+                drawVector(vectorU, sumVec, 'rgba(255, 255, 255, 0.1)', '', 1, [3, 3]);
+                drawVector(vectorV, sumVec, 'rgba(255, 255, 255, 0.1)', '', 1, [3, 3]);
+
+                const scaledSum = { x: sumVec.x * lambda, y: sumVec.y * lambda };
+                drawVector(zeroVec, scaledSum, varColor('--accent'), 'λ · (u + v)', 4);
+
+                // Draw Path B: λ·u + λ·v
+                const scaledU = { x: vectorU.x * lambda, y: vectorU.y * lambda };
+                const scaledV = { x: vectorV.x * lambda, y: vectorV.y * lambda };
+                
+                // Draw component scaled vectors
+                drawVector(zeroVec, scaledU, 'rgba(16, 185, 129, 0.65)', 'λ·u', 2.5);
+                drawVector(scaledU, { x: scaledU.x + scaledV.x, y: scaledU.y + scaledV.y }, 'rgba(6, 182, 212, 0.65)', 'λ·v', 2.5, [2, 2]);
+
+                // Draggable heads
+                drawDraggableHandle(vectorU, varColor('--primary'));
+                drawDraggableHandle(vectorV, varColor('--secondary'));
+
+            } else if (playMode === 'associativity') {
+                // Original u
+                drawVector(zeroVec, vectorU, 'rgba(255, 255, 255, 0.25)', 'u', 2, [3, 3]);
+
+                // Intermediate scaling by ψ
+                const psiU = { x: vectorU.x * psi, y: vectorU.y * psi };
+                drawVector(zeroVec, psiU, '#60a5fa', 'ψ · u', 2);
+
+                // Sequential double scale λ·(ψ·u)
+                const doubleScale = { x: psiU.x * lambda, y: psiU.y * lambda };
+                drawVector(zeroVec, doubleScale, varColor('--accent'), 'λ · (ψ · u)', 4);
+
+                // Draggable head for original u
+                drawDraggableHandle(vectorU, varColor('--primary'));
+            }
+        }
+
+        // Helper calculations
+        function gridToPixel(gridPos) {
+            return {
+                x: origin.x + gridPos.x * scale,
+                y: origin.y - gridPos.y * scale // Invert Y axis for screen space
+            };
+        }
+
+        function pixelToGrid(pixelPos) {
+            return {
+                x: (pixelPos.x - origin.x) / scale,
+                y: (origin.y - pixelPos.y) / scale
+            };
+        }
+
+        // Interactive mouse & touch event listeners
+        function getMousePos(canvas, evt) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        function getDistance(p1, p2) {
+            return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+        }
+
+        function handleMouseDown(pos) {
+            const gridPos = pixelToGrid(pos);
+            
+            const distU = getDistance(gridPos, vectorU);
+            const distV = getDistance(gridPos, vectorV);
+
+            // Drag Threshold in units
+            const dragThreshold = 0.4; 
+
+            if (distU < dragThreshold) {
+                isDragging = 'u';
+            } else if (distV < dragThreshold && coordVLine.style.display !== 'none') {
+                isDragging = 'v';
+            }
+        }
+
+        function handleMouseMove(pos) {
+            const gridPos = pixelToGrid(pos);
+            mouseCoords.textContent = `(x: ${gridPos.x.toFixed(2)}, y: ${gridPos.y.toFixed(2)})`;
+
+            if (isDragging === 'u') {
+                // Snap to 0.1 increments for cleaner readouts
+                vectorU.x = Math.round(gridPos.x * 10) / 10;
+                vectorU.y = Math.round(gridPos.y * 10) / 10;
+                updateUI();
+                draw();
+            } else if (isDragging === 'v') {
+                vectorV.x = Math.round(gridPos.x * 10) / 10;
+                vectorV.y = Math.round(gridPos.y * 10) / 10;
+                updateUI();
+                draw();
+            }
+        }
+
+        function handleMouseUp() {
+            isDragging = null;
+        }
+
+        // Register Desktop mouse interactions
+        canvas.addEventListener('mousedown', (e) => {
+            handleMouseDown(getMousePos(canvas, e));
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            handleMouseMove(getMousePos(canvas, e));
+        });
+
+        window.addEventListener('mouseup', handleMouseUp);
+
+        // Register Mobile touch interactions
+        canvas.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent("mousedown", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent("mousemove", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        window.addEventListener('touchend', () => {
+            handleMouseUp();
+        });
+
+        // Sliders interaction
+        lambdaSlider.addEventListener('input', (e) => {
+            lambda = parseFloat(e.target.value);
+            updateUI();
+            draw();
+        });
+
+        psiSlider.addEventListener('input', (e) => {
+            psi = parseFloat(e.target.value);
+            updateUI();
+            draw();
+        });
+
+        // Bootstrapping initial state
+        updateModeSettings();
+        updateUI();
+        setTimeout(resizeCanvas, 100);
+    </script>
+</body>
+</html>
