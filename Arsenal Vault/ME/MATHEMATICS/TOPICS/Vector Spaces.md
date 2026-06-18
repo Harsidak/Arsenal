@@ -109,3 +109,6 @@ You can physically play with the "Inner" and "Outer" operations to see exactly h
 **Related Notes**:
 *   [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]
 *   [[Groups]] (The foundational building block)
+*   [[Vector Subspaces]]
+*   [[Linear Independence]]
+*   [[Linear Mappings]]

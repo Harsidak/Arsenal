@@ -24,7 +24,7 @@ $$\forall x, y \in \mathcal{G} \implies x \otimes y \in \mathcal{G}$$
 *   **👶 The 5yo Explanation**: Combining two club members always produces another club member. You can never "escape" the club by combining its members.
 *   **💻 The Engineering Reality**: **No Type-Mismatch Errors.** Operating on two valid data points of type $T$ will never accidentally spit out a corrupted string, a `NaN`, or an out-of-bounds object. Adding two 3D vectors will always give you a valid 3D vector.
 *   **🎲 Concrete Example**: Under addition, adding any two integers (e.g., $5 + 3 = 8$) always yields another integer.
-
+ 
 ---
 
 ### Ⅱ. Associativity

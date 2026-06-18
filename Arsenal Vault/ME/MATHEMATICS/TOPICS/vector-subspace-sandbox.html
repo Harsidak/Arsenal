@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Subspace Interactive Sandbox</title>
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-deep: #080c14;
+            --bg-card: rgba(18, 26, 46, 0.65);
+            --bg-card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #10b981; /* Emerald Green for Vector u */
+            --secondary: #06b6d4; /* Electric Cyan for Vector v */
+            --accent: #d946ef; /* Hot Pink/Purple for Addition */
+            --warning: #ef4444; /* Vivid Red for Failures */
+            --warning-bg: rgba(239, 68, 68, 0.1);
+            --success: #3b82f6; /* Blue for Scaled Vector */
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --grid-color: rgba(255, 255, 255, 0.04);
+            --axis-color: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            padding: 1.5rem;
+            gap: 1.5rem;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Sidebar Control Panel */
+        .sidebar {
+            flex: 0 0 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            backdrop-filter: blur(12px);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        p.desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 0.6rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        button.active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        button.active-fail {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        /* Sliders */
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
+        }
+
+        /* Status Checks list */
+        .check-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: border-color 0.3s ease;
+        }
+
+        .check-item.pass {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .check-item.fail {
+            border-color: rgba(239, 68, 68, 0.3);
+            background: var(--warning-bg);
+        }
+
+        .check-badge {
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.15rem;
+        }
+
+        .pass .check-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--primary);
+        }
+
+        .fail .check-badge {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--warning);
+        }
+
+        .check-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            flex: 1;
+        }
+
+        .check-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .check-math {
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+        }
+
+        .check-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Main Sandbox Panel */
+        .sandbox {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .canvas-container {
+            position: relative;
+            flex: 1;
+            background: #03070c;
+            border: 1px solid var(--bg-card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 480px;
+        }
+
+        canvas {
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* Live Legend Overlay */
+        .legend-overlay {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            background: rgba(8, 12, 20, 0.85);
+            padding: 0.35rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+        }
+
+        .color-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        /* Toast Indicator */
+        .toast {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--warning);
+            color: #fff;
+            padding: 0.5rem 1.25rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Help tip */
+        .help-tip {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: -0.25rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Sidebar Controls -->
+        <div class="sidebar">
+            
+            <div class="card">
+                <h2>📐 Subspace Settings</h2>
+                <p class="desc">
+                    Adjust the line trajectory parameters. A valid subspace must pass through the origin (Offset = 0).
+                </p>
+                
+                <div class="preset-buttons">
+                    <button id="preset-valid" class="active">Origin Line (Valid)</button>
+                    <button id="preset-invalid">Offset Line (Invalid)</button>
+                </div>
+
+                <div class="control-group">
+                    <div class="slider-wrapper">
+                        <div class="slider-header">
+                            <span>Line Offset (c)</span>
+                            <span id="val-offset" style="color: var(--warning);">0.0</span>
+                        </div>
+                        <input type="range" id="slide-offset" min="-4" max="4" step="0.5" value="0">
+                    </div>
+                    
+                    <div class="slider-wrapper">
+                        <div class="slider-header">
+                            <span>Line Slope (m)</span>
+                            <span id="val-slope">1.0</span>
+                        </div>
+                        <input type="range" id="slide-slope" min="-2" max="2" step="0.2" value="1.0">
+                    </div>
+
+                    <div class="slider-wrapper">
+                        <div class="slider-header">
+                            <span>Scaling Factor (&lambda;)</span>
+                            <span id="val-lambda" style="color: var(--success);">1.5</span>
+                        </div>
+                        <input type="range" id="slide-lambda" min="-2.0" max="2.0" step="0.1" value="1.5">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security checks feedback -->
+            <div class="card">
+                <h2>🛡️ Security Check Status</h2>
+                <div class="check-list">
+                    
+                    <div id="check-zero" class="check-item pass">
+                        <span class="check-badge">Pass</span>
+                        <div class="check-info">
+                            <span class="check-title">1. Contains Origin (Zero Vector)</span>
+                            <span id="math-zero" class="check-math">0 = m(0) + c</span>
+                            <span class="check-desc">The zero vector [0, 0] must lie on the line.</span>
+                        </div>
+                    </div>
+
+                    <div id="check-scale" class="check-item pass">
+                        <span class="check-badge">Pass</span>
+                        <div class="check-info">
+                            <span class="check-title">2. Closure under Scaling</span>
+                            <span id="math-scale" class="check-math">&lambda;u ∈ U</span>
+                            <span class="check-desc">Scaling vector u by &lambda; must not pull it off the line.</span>
+                        </div>
+                    </div>
+
+                    <div id="check-add" class="check-item pass">
+                        <span class="check-badge">Pass</span>
+                        <div class="check-info">
+                            <span class="check-title">3. Closure under Addition</span>
+                            <span id="math-add" class="check-math">u + v ∈ U</span>
+                            <span class="check-desc">Adding vectors u and v together must remain on the line.</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="help-tip">
+                💡 Drag target handles 🟢 (u) and 🔵 (v) directly on the grid to change inputs!
+            </div>
+
+        </div>
+
+        <!-- Interactive Grid Area -->
+        <div class="sandbox">
+            <div class="canvas-container" id="canvas-wrapper">
+                <canvas id="gridCanvas"></canvas>
+                
+                <!-- Legend Overlay -->
+                <div class="legend-overlay">
+                    <div class="legend-item">
+                        <span class="color-dot" style="background: var(--primary);"></span>
+                        <span>Vector u = [<span id="coord-u">2.0, 2.0</span>]</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-dot" style="background: var(--secondary);"></span>
+                        <span>Vector v = [<span id="coord-v">-1.0, -1.0</span>]</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-dot" style="background: var(--success);"></span>
+                        <span>Scaled &lambda;u = [<span id="coord-scale">3.0, 3.0</span>]</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-dot" style="background: var(--accent);"></span>
+                        <span>Sum u + v = [<span id="coord-sum">1.0, 1.0</span>]</span>
+                    </div>
+                </div>
+
+                <!-- Toast alert -->
+                <div id="status-toast" class="toast">⚠️ CRASH: Vector jumped off the subspace!</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gridCanvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.getElementById('canvas-wrapper');
+
+        // State parameters
+        let m = 1.0;
+        let c = 0.0;
+        let lambda = 1.5;
+
+        // Vector handles (x values; y is computed as m*x + c)
+        let xu = 2.0;
+        let xv = -1.0;
+
+        // UI Element connections
+        const slideOffset = document.getElementById('slide-offset');
+        const slideSlope = document.getElementById('slide-slope');
+        const slideLambda = document.getElementById('slide-lambda');
+
+        const valOffset = document.getElementById('val-offset');
+        const valSlope = document.getElementById('val-slope');
+        const valLambda = document.getElementById('val-lambda');
+
+        const presetValid = document.getElementById('preset-valid');
+        const presetInvalid = document.getElementById('preset-invalid');
+
+        const toast = document.getElementById('status-toast');
+
+        // Check list DOM elements
+        const chkZero = document.getElementById('check-zero');
+        const chkScale = document.getElementById('check-scale');
+        const chkAdd = document.getElementById('check-add');
+
+        const mathZero = document.getElementById('math-zero');
+        const mathScale = document.getElementById('math-scale');
+        const mathAdd = document.getElementById('math-add');
+
+        // Setup dimensions
+        const gridSize = 40; // Pixels per coordinate unit
+        let width = 600;
+        let height = 600;
+
+        function resizeCanvas() {
+            width = container.clientWidth;
+            height = container.clientHeight;
+            canvas.width = width;
+            canvas.height = height;
+            draw();
+        }
+
+        // Coordinates conversions
+        function toScreen(x, y) {
+            return {
+                x: width / 2 + x * gridSize,
+                y: height / 2 - y * gridSize
+            };
+        }
+
+        function toCartesian(screenX, screenY) {
+            return {
+                x: (screenX - width / 2) / gridSize,
+                y: (height / 2 - screenY) / gridSize
+            };
+        }
+
+        // Setup listeners
+        slideOffset.addEventListener('input', (e) => {
+            c = parseFloat(e.target.value);
+            valOffset.textContent = c.toFixed(1);
+            updatePresetStatus();
+            draw();
+        });
+
+        slideSlope.addEventListener('input', (e) => {
+            m = parseFloat(e.target.value);
+            valSlope.textContent = m.toFixed(1);
+            draw();
+        });
+
+        slideLambda.addEventListener('input', (e) => {
+            lambda = parseFloat(e.target.value);
+            valLambda.textContent = lambda.toFixed(1);
+            draw();
+        });
+
+        presetValid.addEventListener('click', () => {
+            c = 0.0;
+            slideOffset.value = 0;
+            valOffset.textContent = "0.0";
+            updatePresetStatus();
+            draw();
+        });
+
+        presetInvalid.addEventListener('click', () => {
+            c = 2.0;
+            slideOffset.value = 2.0;
+            valOffset.textContent = "2.0";
+            updatePresetStatus();
+            draw();
+        });
+
+        function updatePresetStatus() {
+            if (c === 0.0) {
+                presetValid.className = 'active';
+                presetInvalid.className = '';
+                slideOffset.style.accentColor = 'var(--primary)';
+                valOffset.style.color = 'var(--text-muted)';
+            } else {
+                presetValid.className = '';
+                presetInvalid.className = 'active-fail';
+                slideOffset.style.accentColor = 'var(--warning)';
+                valOffset.style.color = 'var(--warning)';
+            }
+        }
+
+        // Interactivity
+        let dragging = null; // 'u' or 'v'
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mousePos = toCartesian(e.clientX - rect.left, e.clientY - rect.top);
+            
+            // Compute screen coords of handles
+            const posU = toScreen(xu, m * xu + c);
+            const posV = toScreen(xv, m * xv + c);
+
+            // Compute distance in pixels
+            const distU = Math.hypot(e.clientX - rect.left - posU.x, e.clientY - rect.top - posU.y);
+            const distV = Math.hypot(e.clientX - rect.left - posV.x, e.clientY - rect.top - posV.y);
+
+            if (distU < 15) {
+                dragging = 'u';
+            } else if (distV < 15) {
+                dragging = 'v';
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!dragging) return;
+            const rect = canvas.getBoundingClientRect();
+            const mousePos = toCartesian(e.clientX - rect.left, e.clientY - rect.top);
+
+            // Constrain point to closest point on the line: y = m*x + c
+            // For a 2D line, we just map it by projecting mousePos.x
+            // To make dragging smoother, we can map to the closest point along the infinite line
+            // Projection of point P(px, py) on line y = mx+c:
+            // x_proj = (px + m*py - m*c) / (1 + m^2)
+            const px = mousePos.x;
+            const py = mousePos.y;
+            const xProj = (px + m * py - m * c) / (1 + m * m);
+
+            if (dragging === 'u') {
+                xu = Math.max(-10, Math.min(10, xProj));
+            } else if (dragging === 'v') {
+                xv = Math.max(-10, Math.min(10, xProj));
+            }
+            draw();
+        });
+
+        window.addEventListener('mouseup', () => {
+            dragging = null;
+        });
+
+        // Math checking
+        function performChecks() {
+            // 1. Zero vector check
+            // Does [0,0] lie on the line? (Is c == 0?)
+            const zeroPass = Math.abs(c) < 0.01;
+
+            // 2. Closure under scaling
+            // For a vector u = [xu, yu] on the line, does lambda * u lie on the line?
+            // lambda * yu = m * (lambda * xu) + c
+            // Since yu = m * xu + c, lambda * yu = lambda * m * xu + lambda * c
+            // This equals m * (lambda * x_u) + c only if lambda * c = c
+            // Since we must hold for all lambda, it holds if c == 0.
+            // Let's compute actual coordinate and check delta:
+            const yu = m * xu + c;
+            const su_x = lambda * xu;
+            const su_y = lambda * yu;
+            const expected_su_y = m * su_x + c;
+            const scalePass = Math.abs(su_y - expected_su_y) < 0.01;
+
+            // 3. Closure under addition
+            // u + v = [xu + xv, yu + yv]
+            // Does yu + yv = m * (xu + xv) + c?
+            // yu + yv = m * xu + c + m * xv + c = m*(xu+xv) + 2c
+            // Equal only if 2c = c => c = 0
+            const yv = m * xv + c;
+            const add_x = xu + xv;
+            const add_y = yu + yv;
+            const expected_add_y = m * add_x + c;
+            const addPass = Math.abs(add_y - expected_add_y) < 0.01;
+
+            // Update badges & classes
+            updateCheckUI(chkZero, zeroPass);
+            updateCheckUI(chkScale, scalePass);
+            updateCheckUI(chkAdd, addPass);
+
+            // Update Math Text
+            mathZero.textContent = `y = ${m.toFixed(1)}(0) + ${c.toFixed(1)} => y = ${c.toFixed(1)} ${zeroPass ? '(Origin!)' : '(Misses!)'}`;
+            mathScale.textContent = `[${su_x.toFixed(1)}, ${su_y.toFixed(1)}] ${scalePass ? '∈ U' : '∉ U'}`;
+            mathAdd.textContent = `[${add_x.toFixed(1)}, ${add_y.toFixed(1)}] ${addPass ? '∈ U' : '∉ U'}`;
+
+            // Toast feedback
+            if (!zeroPass || !scalePass || !addPass) {
+                toast.classList.add('show');
+            } else {
+                toast.classList.remove('show');
+            }
+
+            // Update coordinates display
+            document.getElementById('coord-u').textContent = `${xu.toFixed(1)}, ${yu.toFixed(1)}`;
+            document.getElementById('coord-v').textContent = `${xv.toFixed(1)}, ${yv.toFixed(1)}`;
+            document.getElementById('coord-scale').textContent = `${su_x.toFixed(1)}, ${su_y.toFixed(1)}`;
+            document.getElementById('coord-sum').textContent = `${add_x.toFixed(1)}, ${add_y.toFixed(1)}`;
+
+            return {
+                zeroPass,
+                scalePass,
+                addPass,
+                yu,
+                yv,
+                su_x,
+                su_y,
+                add_x,
+                add_y
+            };
+        }
+
+        function updateCheckUI(elem, pass) {
+            if (pass) {
+                elem.className = 'check-item pass';
+                elem.querySelector('.check-badge').textContent = 'Pass';
+            } else {
+                elem.className = 'check-item fail';
+                elem.querySelector('.check-badge').textContent = 'Fail';
+            }
+        }
+
+        // Draw routine
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+
+            const results = performChecks();
+            const yu = results.yu;
+            const yv = results.yv;
+
+            // Draw grid lines
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'var(--grid-color)';
+            
+            const startX = Math.floor(-width / (2 * gridSize));
+            const endX = Math.ceil(width / (2 * gridSize));
+            const startY = Math.floor(-height / (2 * gridSize));
+            const endY = Math.ceil(height / (2 * gridSize));
+
+            for (let x = startX; x <= endX; x++) {
+                const screenPt = toScreen(x, 0);
+                ctx.beginPath();
+                ctx.moveTo(screenPt.x, 0);
+                ctx.lineTo(screenPt.x, height);
+                ctx.stroke();
+            }
+            for (let y = startY; y <= endY; y++) {
+                const screenPt = toScreen(0, y);
+                ctx.beginPath();
+                ctx.moveTo(0, screenPt.y);
+                ctx.lineTo(width, screenPt.y);
+                ctx.stroke();
+            }
+
+            // Draw primary axes
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'var(--axis-color)';
+            
+            const center = toScreen(0, 0);
+            ctx.beginPath();
+            ctx.moveTo(center.x, 0);
+            ctx.lineTo(center.x, height);
+            ctx.moveTo(0, center.y);
+            ctx.lineTo(width, center.y);
+            ctx.stroke();
+
+            // Draw axis markers
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.font = '10px var(--font-mono)';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            for (let x = startX; x <= endX; x++) {
+                if (x === 0) continue;
+                const pos = toScreen(x, 0);
+                ctx.fillText(x, pos.x, pos.y + 4);
+            }
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for (let y = startY; y <= endY; y++) {
+                if (y === 0) continue;
+                const pos = toScreen(0, y);
+                ctx.fillText(y, pos.x - 4, pos.y);
+            }
+
+            // Draw the line (The slice space U)
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = results.zeroPass ? 'rgba(16, 185, 129, 0.7)' : 'rgba(239, 68, 68, 0.5)';
+            ctx.setLineDash([4, 4]); // dashed if invalid subspace, solid if valid
+            if (results.zeroPass) ctx.setLineDash([]);
+            
+            const ptLeft = toScreen(-12, m * (-12) + c);
+            const ptRight = toScreen(12, m * (12) + c);
+            
+            ctx.beginPath();
+            ctx.moveTo(ptLeft.x, ptLeft.y);
+            ctx.lineTo(ptRight.x, ptRight.y);
+            ctx.stroke();
+            ctx.setLineDash([]); // Reset line dash
+
+            // Draw Line Label
+            ctx.fillStyle = results.zeroPass ? 'var(--primary)' : 'var(--warning)';
+            ctx.font = 'bold 12px var(--font-main)';
+            ctx.textAlign = 'left';
+            const labelPos = toScreen(5.5, m * 5.5 + c + 0.3);
+            ctx.fillText(c === 0 ? "Subspace U (y = " + m.toFixed(1) + "x)" : "Subset U (y = " + m.toFixed(1) + "x + " + c.toFixed(1) + ")", labelPos.x, labelPos.y);
+
+            // Draw zero vector (The Anchor check point)
+            ctx.beginPath();
+            ctx.arc(center.x, center.y, 6, 0, 2 * Math.PI);
+            ctx.fillStyle = results.zeroPass ? 'var(--primary)' : 'var(--warning)';
+            ctx.fill();
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Label Zero Vector
+            ctx.fillStyle = '#fff';
+            ctx.font = '10px var(--font-mono)';
+            ctx.textAlign = 'left';
+            ctx.fillText(" 0", center.x + 6, center.y + 6);
+
+            // Draw vector u (Green)
+            const screenU = toScreen(xu, yu);
+            drawVector(center.x, center.y, screenU.x, screenU.y, 'var(--primary)', 3);
+
+            // Draw vector v (Cyan)
+            const screenV = toScreen(xv, yv);
+            drawVector(center.x, center.y, screenV.x, screenV.y, 'var(--secondary)', 3);
+
+            // Draw scaled vector lambda * u (Blue)
+            const screenSU = toScreen(results.su_x, results.su_y);
+            const scaleColor = results.scalePass ? 'var(--success)' : 'rgba(239, 68, 68, 0.8)';
+            drawVector(center.x, center.y, screenSU.x, screenSU.y, scaleColor, 2, [5, 2]);
+
+            // Draw sum vector u + v (Hot Pink)
+            const screenSum = toScreen(results.add_x, results.add_y);
+            const addColor = results.addPass ? 'var(--accent)' : 'rgba(217, 70, 239, 0.4)';
+            drawVector(center.x, center.y, screenSum.x, screenSum.y, addColor, 2);
+
+            // If closure fails, draw connecting lines to show error/deviation
+            if (!results.scalePass) {
+                // Connect scaled vector tip to the subset line
+                const closestOnLineX = results.su_x;
+                const closestOnLineY = m * closestOnLineX + c;
+                const screenClosest = toScreen(closestOnLineX, closestOnLineY);
+                
+                ctx.beginPath();
+                ctx.strokeStyle = 'var(--warning)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([2, 2]);
+                ctx.moveTo(screenSU.x, screenSU.y);
+                ctx.lineTo(screenClosest.x, screenClosest.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw Warning Badge
+                ctx.fillStyle = 'var(--warning)';
+                ctx.font = '9px var(--font-mono)';
+                ctx.fillText("⚠️ λu OUTSIDE U!", screenSU.x + 8, screenSU.y - 8);
+            }
+
+            if (!results.addPass) {
+                // Connect sum vector tip to the subset line
+                const closestOnLineX = results.add_x;
+                const closestOnLineY = m * closestOnLineX + c;
+                const screenClosest = toScreen(closestOnLineX, closestOnLineY);
+
+                ctx.beginPath();
+                ctx.strokeStyle = 'var(--accent)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([2, 2]);
+                ctx.moveTo(screenSum.x, screenSum.y);
+                ctx.lineTo(screenClosest.x, screenClosest.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Draw Warning Badge
+                ctx.fillStyle = 'var(--accent)';
+                ctx.font = '9px var(--font-mono)';
+                ctx.fillText("⚠️ u+v OUTSIDE U!", screenSum.x + 8, screenSum.y + 12);
+            }
+
+            // Draw interaction handles for dragging
+            drawHandle(screenU.x, screenU.y, 'var(--primary)');
+            drawHandle(screenV.x, screenV.y, 'var(--secondary)');
+        }
+
+        function drawVector(fromX, fromY, toX, toY, color, width, dash = []) {
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = width;
+            if (dash.length) {
+                ctx.setLineDash(dash);
+            } else {
+                ctx.setLineDash([]);
+            }
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw arrow head
+            const angle = Math.atan2(toY - fromY, toX - fromX);
+            const headlen = 10;
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(toX - headlen * Math.cos(angle + Math.PI / 6), toY - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.fill();
+        }
+
+        function drawHandle(x, y, color) {
+            ctx.beginPath();
+            ctx.arc(x, y, 6, 0, 2 * Math.PI);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Glow ring
+            ctx.beginPath();
+            ctx.arc(x, y, 12, 0, 2 * Math.PI);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 1;
+            ctx.globalAlpha = 0.3;
+            ctx.stroke();
+            ctx.globalAlpha = 1.0;
+        }
+
+        // Initialize size
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+    </script>
+</body>
+</html>
