@@ -11,7 +11,7 @@
 *.class
 *.dll
 *.so
-
+*.env
 # Python
 __pycache__/
 *.py[cod]
@@ -60,3 +60,7 @@ anaconda_projects/
 
 # learning related stuff
 LEARNING_CURVE/
+
+*wandb/
+*.pth
+*.csv
