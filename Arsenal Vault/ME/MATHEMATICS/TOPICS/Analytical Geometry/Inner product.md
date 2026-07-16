@@ -56,3 +56,4 @@ Why is this dual-linearity rule so strict? Because the most famous and important
 *   [[Vector Spaces]]
 *   [[Norms]] (Often induced by inner products)
 *   [[Linear Mappings]]
+[[Analytical Geometry Summary]]
