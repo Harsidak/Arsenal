@@ -1,7 +1,7 @@
 # 🪞 Symmetric, Definite, and Positive Matrices
 
 > [!NOTE] Source Context
-> This is one of the most beautiful and mechanical concepts in all of linear algebra. If you want to build neural networks that actually learn instead of crashing or spinning out of control, you have to understand this exact equation.
+> Adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. This is one of the most beautiful concepts in linear algebra. Positive definite matrices form the structural requirement for [[TOPICS/MATRICES/Cholesky Decomposition|Cholesky Decomposition]], Gaussian processes, and optimization loss curvature.
 
 ---
 

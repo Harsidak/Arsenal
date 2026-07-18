@@ -1,7 +1,7 @@
 # 🤝 Inner Products & Bilinear Mappings
 
 > [!NOTE] Source Context
-> This is where the math starts to get incredibly powerful. You are stepping out of basic vector arithmetic (from [[Vector Spaces]]) and into the machinery that actually allows an AI to compare complex data. Extracted from first-principles linear algebra.
+> This is where the math starts to get incredibly powerful. You are stepping out of basic vector arithmetic (from [[Vector Spaces]]) and into the machinery adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]] that allows an AI to compare complex data.
 
 When you are engineering a system to detect real-time emotions or process offline commands, the AI constantly needs to compare two massive arrays of numbers to see how similar they are. A **Bilinear Mapping** (represented by the Greek letter $\Omega$) is the exact mathematical engine that makes those comparisons possible.
 

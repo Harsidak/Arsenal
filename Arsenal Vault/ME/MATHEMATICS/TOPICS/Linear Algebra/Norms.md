@@ -1,7 +1,7 @@
 # 📏 Norms
 
 > [!NOTE] Source Context
-> This concept builds upon the foundation of [[Vector Spaces]] and provides the mathematical "tape measure" required for defining distances and errors in machine learning. It was extracted from first-principles deconstruction of linear algebra concepts.
+> This concept builds upon the foundation of [[Vector Spaces]] and is adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. It provides the mathematical "tape measure" required for defining distances and errors in machine learning.
 
 ---
 

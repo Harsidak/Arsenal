@@ -1,5 +1,10 @@
 # Analytical Geometry Summary
 
+> [!NOTE] Source Context & References
+> **Primary Textbook:** *Mathematics for Machine Learning* (Deisenroth, Faisal, Ong) — Chapter 3: Analytical Geometry
+> **Parent Category:** [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]] | [[MATHEMATICS]]
+> **Related Notes:** [[TOPICS/Analytical Geometry/Inner product|Inner Product]], [[TOPICS/Analytical Geometry/Lengths and Distances|Lengths and Distances]], [[TOPICS/Linear Algebra/Norms|Norms]], [[TOPICS/MATRICES/Determinants and Trace|Determinants and Trace]]
+
 This document provides a rigorous geometric perspective on the core linear algebra concepts that underpin modern Machine Learning and Deep Learning algorithms.
 
 ---
