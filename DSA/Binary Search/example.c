@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+
+
 int Bs(int array[], int target){
     int len = sizeof(array) / sizeof(array[0]);
     int low = 0;
