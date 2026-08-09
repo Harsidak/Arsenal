@@ -3,7 +3,7 @@
 > [!NOTE] Source Context & References
 > **Primary Textbook:** *Mathematics for Machine Learning* (Deisenroth, Faisal, Ong) — Chapter 4: Matrix Decompositions
 > **Parent Category:** [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]] | [[MATHEMATICS]]
-> **Related Notes:** [[TOPICS/MATRICES/Eigenvectors and Eigenspectrum|Eigenvectors and Eigenspectrum]], [[TOPICS/MATRICES/Diagonalization|Diagonalization]], [[TOPICS/MATRICES/Singular Value Decomposition|Singular Value Decomposition]], [[TOPICS/Linear Algebra/Linear Mappings|Linear Mappings]]
+> **Related Notes:** [[Eigenvectors and Eigenspectrum|Eigenvectors and Eigenspectrum]], [[Diagonalization|Diagonalization]], [[Singular Value Decomposition|Singular Value Decomposition]], [[Linear Mappings|Linear Mappings]]
 
 Diagonalization is one of the most powerful tools in linear algebra. It transforms a complex, coupled linear operator into a simple, decoupled set of scalar operations by switching to the matrix's natural coordinate system (its eigenbasis).
 

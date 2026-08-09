@@ -3,7 +3,7 @@
 > [!NOTE] Source Context & References
 > **Primary Textbook:** *Mathematics for Machine Learning* (Deisenroth, Faisal, Ong) — Chapter 4: Matrix Decompositions
 > **Parent Category:** [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]] | [[MATHEMATICS]]
-> **Related Notes:** [[TOPICS/MATRICES/Determinants and Trace|Determinants and Trace]], [[TOPICS/MATRICES/Diagonalization|Diagonalization]], [[TOPICS/MATRICES/Singular Value Decomposition|Singular Value Decomposition]], [[TOPICS/Linear Algebra/Symmetric, Definite and Positive Matrices|Symmetric, Definite and Positive Matrices]]
+> **Related Notes:** [[Determinants and Trace|Determinants and Trace]], [[Diagonalization|Diagonalization]], [[Singular Value Decomposition|Singular Value Decomposition]], [[Symmetric, Definite and Positive Matrices|Symmetric, Definite and Positive Matrices]]
 
 This note places **Cholesky decomposition** on the mathematical landscape, connecting it to symmetric positive definite matrices, trace/determinant calculations, and deep learning applications.
 

@@ -1,7 +1,7 @@
 # 📐 Linear Mappings
 
 > [!NOTE] Source Context
-> This concept builds directly upon [[Vector Spaces]] and [[Linear Independence]], and is adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. In AI systems and 3D computer graphics (such as rendering AR overlays in Project ONYX), **Linear Mappings** are the mathematical operators that transform vectors (rotate, scale, project) while preserving the linear structure of the space.
+> This concept builds directly upon [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]] and [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Linear Independence]], and is adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. In AI systems and 3D computer graphics (such as rendering AR overlays in Project ONYX), **Linear Mappings** are the mathematical operators that transform vectors (rotate, scale, project) while preserving the linear structure of the space.
 
 ---
 
@@ -118,6 +118,6 @@ To help you visualize how matrices transform grid space, and to see injectivity,
 ---
 
 **Related Notes**:
-*   [[Vector Spaces]]
-*   [[Linear Independence]]
+*   [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]]
+*   [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Linear Independence]]
 *   [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]

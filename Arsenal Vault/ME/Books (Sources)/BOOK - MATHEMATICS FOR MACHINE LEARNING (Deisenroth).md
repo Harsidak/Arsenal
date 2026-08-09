@@ -3,7 +3,7 @@
 ### 1. Linear Algebra 
 *   **The Simple Idea**: In ML, everything is a list of numbers (a **Vector**). An image is a vector of pixels; a word is a vector of meanings.
 *   **Why it matters**: It is the math of moving these lists around. LLMs use this to see which "meaning vector" is closest to the current one.
-*   **The Foundation**: Underpinned by [[Groups]] and [[Vector Spaces]], which establish the formal mathematical structures (Abelian groups, fields, and linear operations) for scaling, adding, and manipulating data.
+*   **The Foundation**: Underpinned by [[Groups]] and [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]], which establish the formal mathematical structures (Abelian groups, fields, and linear operations) for scaling, adding, and manipulating data.
 
 ### 2. Calculus 
 *   **The Simple Idea**: Calculus tells you how things *change*.

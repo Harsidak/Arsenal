@@ -1,7 +1,7 @@
 # 🪞 Symmetric, Definite, and Positive Matrices
 
 > [!NOTE] Source Context
-> Adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. This is one of the most beautiful concepts in linear algebra. Positive definite matrices form the structural requirement for [[TOPICS/MATRICES/Cholesky Decomposition|Cholesky Decomposition]], Gaussian processes, and optimization loss curvature.
+> Adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. This is one of the most beautiful concepts in linear algebra. Positive definite matrices form the structural requirement for [[Cholesky Decomposition|Cholesky Decomposition]], Gaussian processes, and optimization loss curvature.
 
 ---
 

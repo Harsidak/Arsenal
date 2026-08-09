@@ -3,7 +3,7 @@
 > [!NOTE] Source Context & References
 > **Primary Textbook:** *Mathematics for Machine Learning* (Deisenroth, Faisal, Ong) — Chapter 4: Matrix Decompositions
 > **Parent Category:** [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]] | [[MATHEMATICS]]
-> **Related Notes:** [[TOPICS/MATRICES/Eigenvectors and Eigenspectrum|Eigenvectors and Eigenspectrum]], [[TOPICS/MATRICES/Diagonalization|Diagonalization]], [[TOPICS/MATRICES/Cholesky Decomposition|Cholesky Decomposition]], [[TOPICS/Analytical Geometry/Analytical Geometry Summary|Analytical Geometry Summary]]
+> **Related Notes:** [[Eigenvectors and Eigenspectrum|Eigenvectors and Eigenspectrum]], [[Diagonalization|Diagonalization]], [[Cholesky Decomposition|Cholesky Decomposition]], [[Analytical Geometry Summary|Analytical Geometry Summary]]
 
 This note places **traces** and **determinants** on the mathematical landscape, exploring their definitions, first-principles geometry, properties, and direct applications in Machine Learning and Deep Learning.
 

@@ -39,4 +39,4 @@ The "agreement" between two things can *never* be bigger than their actual physi
 **Related Notes**:
 *   [[Inner product]]
 *   [[Norms]]
-*   [[Vector Spaces]]
+*   [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]]

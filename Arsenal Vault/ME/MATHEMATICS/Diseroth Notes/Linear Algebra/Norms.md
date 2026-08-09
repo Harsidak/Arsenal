@@ -1,7 +1,7 @@
 # 📏 Norms
 
 > [!NOTE] Source Context
-> This concept builds upon the foundation of [[Vector Spaces]] and is adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. It provides the mathematical "tape measure" required for defining distances and errors in machine learning.
+> This concept builds upon the foundation of [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]] and is adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. It provides the mathematical "tape measure" required for defining distances and errors in machine learning.
 
 ---
 
@@ -62,4 +62,4 @@ When engineering neural networks, we add norms to the loss function (Regularizat
 ---
 
 **Related Notes**:
-*   [[Vector Spaces]] (The arena where norms operate)
+*   [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]] (The arena where norms operate)

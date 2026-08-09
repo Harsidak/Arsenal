@@ -3,7 +3,7 @@
 > [!NOTE] Source Context & References
 > **Primary Textbook:** *Mathematics for Machine Learning* (Deisenroth, Faisal, Ong) — Chapter 4: Matrix Decompositions
 > **Parent Category:** [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]] | [[MATHEMATICS]]
-> **Related Notes:** [[TOPICS/MATRICES/Determinants and Trace|Determinants and Trace]], [[TOPICS/MATRICES/Diagonalization|Diagonalization]], [[TOPICS/Linear Algebra/Symmetric, Definite and Positive Matrices|Symmetric, Definite and Positive Matrices]]
+> **Related Notes:** [[Determinants and Trace|Determinants and Trace]], [[Diagonalization|Diagonalization]], [[Symmetric, Definite and Positive Matrices|Symmetric, Definite and Positive Matrices]]
 
 This note places **eigenvectors and eigenspectra** on the mathematical landscape, building on the concepts of traces, determinants, and projections.
 

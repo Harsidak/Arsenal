@@ -1,7 +1,7 @@
 # 📐 Vector Subspaces
 
 > [!NOTE] Source Context
-> This concept builds directly on the definition of [[Vector Spaces]] and is learned from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. In AI development and 3D engine design (such as AR coordinate projection in HUDs), we rarely need to compute over the entire multi-billion-dimensional universe. Instead, we constrain our operations to low-dimensional slices called **Subspaces** (like a flat plane or a line). 
+> This concept builds directly on the definition of [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]] and is learned from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. In AI development and 3D engine design (such as AR coordinate projection in HUDs), we rarely need to compute over the entire multi-billion-dimensional universe. Instead, we constrain our operations to low-dimensional slices called **Subspaces** (like a flat plane or a line). 
 
 ---
 
@@ -109,6 +109,6 @@ You can test how shifting a line off the origin breaks both addition and scaling
 ---
 
 **Related Notes**:
-*   [[Vector Spaces]] (The parent universe)
+*   [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]] (The parent universe)
 *   [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]
-*   [[Linear Independence]]
+*   [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Linear Independence]]

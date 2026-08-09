@@ -3,7 +3,7 @@
 > [!NOTE] Source Context & References
 > **Primary Textbook:** *Mathematics for Machine Learning* (Deisenroth, Faisal, Ong) — Chapter 4: Matrix Decompositions
 > **Parent Category:** [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]] | [[MATHEMATICS]]
-> **Related Notes:** [[TOPICS/MATRICES/Singular Value Decomposition|Singular Value Decomposition]], [[TOPICS/MATRICES/Eigenvectors and Eigenspectrum|Eigenvectors and Eigenspectrum]], [[TOPICS/MATRICES/Diagonalization|Diagonalization]], [[TOPICS/Analytical Geometry/Analytical Geometry Summary|Analytical Geometry Summary]]
+> **Related Notes:** [[Singular Value Decomposition|Singular Value Decomposition]], [[Eigenvectors and Eigenspectrum|Eigenvectors and Eigenspectrum]], [[Diagonalization|Diagonalization]], [[Analytical Geometry Summary|Analytical Geometry Summary]]
 
 Singular Value Decomposition (SVD) reveals the underlying geometry of linear operators. This note breaks down how SVD maps space, transforms unit spheres into hyper-ellipsoids, and illuminates the fundamental subspaces of linear algebra.
 
