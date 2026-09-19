@@ -100,7 +100,7 @@ We use this exact same framework to train the world's most advanced AI models:
 
 **Related Notes**:
 *   [[AI]]
-*   [[Techstack]]
+*   [[AI_Techstack]]
 *   [[Markov Decision Process]]
 *   [[Arbitrary Control Rules]]
 *   [[Episode]]

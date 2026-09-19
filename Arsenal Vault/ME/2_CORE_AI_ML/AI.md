@@ -1,5 +1,5 @@
 [[Reinforcement Learning]]
 [[RAG]]
-[[Techstack]]
+[[AI_Techstack]]
 
 [[MATHEMATICS]]
