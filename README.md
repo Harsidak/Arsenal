@@ -2,30 +2,21 @@
 
 > **Welcome to the Arsenal:** a personal vault and practice ground for becoming an elite AI/ML researcher — knowledge base, competitive programming archive, and hands-on ML practice in one place.
 
-This repository tracks my synthesized notes and practice work. Raw source material (textbooks, papers) lives in `LEARNING_CURVE/`, kept outside this repo (see below).
+This repository tracks my synthesized notes and practice work.
 
 ## 📂 Structure
 
 ### 🧠 Arsenal Vault
-Obsidian vault — my own atomic notes, organized under `ME/` by the same taxonomy as my source-material library:
-
-- **`1_FOUNDATIONS/`** — Research methodology, mathematics (linear algebra, analytic geometry, matrices).
-- **`2_CORE_AI_ML/`** — AI/RL notes: MDPs, Bellman equation, value functions, RAG.
-- **`4_SYSTEMS_AND_DEPLOYMENT/`** — Operating systems (synchronization, race conditions), and practical ML/data skills (EDA, PyTorch, tensors).
-- **`5_MIND_AND_MISSION/`** — Book notes, communication/speaking practice, writing, and the BaN-WaiT venture.
-- **`ME.md`** — vault home/index note.
+Obsidian vault — my own atomic notes, organized under `ME/` by a numbered taxonomy (`1_FOUNDATIONS` ... `5_MIND_AND_MISSION`). Edited manually; see `ME.md` for the index.
 
 ### 💻 CodeForces
-Contest solutions — an archive of algorithmic problem-solving and logic building, organized by round.
+Contest solutions — an archive of algorithmic problem-solving and logic building, organized by round. `SOLVED/` is a flat archive of older one-off solves.
 
 ### 🧮 DSA
-Topic-by-topic data structures & algorithms practice (implementation notes, not contest solutions).
+Topic-first data structures & algorithms practice, reusable both for competitive programming and inside larger ML/systems projects. See [DSA/README.md](DSA/README.md).
 
-### 🤖 ML Practice
-Hands-on machine learning: PyTorch scripts and notebooks, foundational library practice (NumPy, pandas), and small experiments.
-
-### 📚 LEARNING_CURVE (not in this repo)
-The source-material library — textbooks, papers, and courses — lives alongside this repo but is excluded from version control (see `.gitignore`) since it's large, static reference material rather than active work.
+### 🧪 Lab
+Flexible ML/research practice space: learning new libraries, working through book exercises, and short scoped implementations of paper architectures (not portfolio projects — those live in their own repos). See [Lab/README.md](Lab/README.md).
 
 ---
 *Continuously building, continuously learning.*
