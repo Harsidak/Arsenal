@@ -1,0 +1,1 @@
+Bought this book to understand stuff related to venture capitalists. 

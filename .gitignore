@@ -37,6 +37,7 @@ share/python-wheels/
 *.egg
 MANIFEST
 .venv/
+.venv_manim/
 venv/
 ENV/
 
@@ -64,3 +65,9 @@ LEARNING_CURVE/
 *wandb/
 *.pth
 *.csv
+
+# AI Agents
+app_build/
+production_artifacts/
+.agents/
+claude.md
