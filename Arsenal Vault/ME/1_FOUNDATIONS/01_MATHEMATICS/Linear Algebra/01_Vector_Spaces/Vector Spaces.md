@@ -1,4 +1,4 @@
-# 📐 Vector Spaces
+﻿# 📐 Vector Spaces
 
 > [!NOTE] Source Context
 > This concept builds directly upon the foundational algebraic structures defined in [[Groups]] and was learned from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. In modern AI engineering, vector spaces are the mathematical arenas where all computation takes place—from high-dimensional word embeddings to spatial rendering in smart glasses.
@@ -110,5 +110,5 @@ You can physically play with the "Inner" and "Outer" operations to see exactly h
 *   [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]
 *   [[Groups]] (The foundational building block)
 *   [[Vector Subspaces]]
-*   [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Linear Independence]]
+*   [[Linear Independence]]
 *   [[Linear Mappings]]

@@ -1,26 +1,34 @@
-# Mathematics for Machine Learning
+# Mathematics for Machine Learning & Core Foundations
 
 > *"Mathematics helps me think critically and in first principles."*
 
-Primary Textbook: **Mathematics for Machine Learning** (Marc Peter Deisenroth, A. Aldo Faisal, and Cheng Soon Ong)
-Main Reference: [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]
+### 📚 Primary Vault References
+- **Linear Algebra Done Right** (Sheldon Axler) — [[BOOK - LINEAR ALGEBRA DONE RIGHT (Axler)]]
+- **Mathematics for Machine Learning** (Marc Peter Deisenroth, A. Aldo Faisal, Cheng Soon Ong) — [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]
 
 ---
 
-## 📌 Linear Algebra & Vector Spaces
-*   **Vector Spaces & Subspaces:** [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces|Vector Spaces]], [[Vector Subspaces|Vector Subspaces]], [[Linear Independence 1|Linear Independence 1]], [[Groups|Groups]]
-*   **Linear Mappings & Matrices:** [[Linear Mappings|Linear Mappings]], [[Symmetric, Definite and Positive Matrices|Symmetric, Definite and Positive Matrices]]
+## 📌 Linear Algebra
 
-## 📌 Analytical Geometry & Norms
-*   **Summary:** [[Analytical Geometry Summary|Analytical Geometry Summary]]
-*   **Norms & Inner Products:** [[Norms|Norms]], [[Inner product|Inner Product]], [[Lengths and Distances|Lengths and Distances]]
+### 1. Vector Spaces & Subspaces
+*   **Foundations:** [[Complex Numbers]], [[Groups]], [[Vector Spaces]], [[Vector Subspaces]]
+*   **Core Mechanics:** [[Linear Independence]]
 
-## 📌 Matrix Decompositions & Spectral Theory
-*   **Determinants & Trace:** [[Determinants and Trace|Determinants and Trace]]
-*   **Eigenvectors & Eigenspectra:** [[Eigenvectors and Eigenspectrum|Eigenvectors and Eigenspectrum]]
-*   **Diagonalization:** [[Diagonalization|Diagonalization]]
-*   **Cholesky Factorization:** [[Cholesky Decomposition|Cholesky Decomposition]]
-*   **Singular Value Decomposition:** [[Singular Value Decomposition|Singular Value Decomposition]], [[Geometric Intuition of SVD|Geometric Intuition of SVD]]
+### 2. Linear Mappings & Operators
+*   **Transformations:** [[Linear Mappings]], [[Symmetric, Definite and Positive Matrices]]
+
+### 3. Inner Products & Analytical Geometry
+*   **Geometry & Metrics:** [[Analytical Geometry Summary]], [[Norms]], [[Inner product]], [[Lengths and Distances]]
+
+### 4. Spectral Theory & Matrix Decompositions
+*   **Spectral Properties:** [[Determinants and Trace]], [[Eigenvectors and Eigenspectrum]], [[Diagonalization]]
+*   **Decompositions:** [[Cholesky Decomposition]], [[Singular Value Decomposition]], [[Geometric Intuition of SVD]]
+
+---
+
+## 📌 Probability & Statistics
+*   **Core Concepts:** [[Probability]], [[Random Variables and Distributions]]
+*   **Distributions:** [[Probability Mass Functions (PMF)]], [[Cumulative Distribution Functions (CDF)]]
 
 ---
 
@@ -28,20 +36,14 @@ Main Reference: [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]
 
 ```mermaid
 graph TD
-    A[MML Deisenroth Book] --> B[Linear Algebra]
-    A --> C[Analytical Geometry]
-    A --> D[Matrices & Spectral Theory]
+    M[Mathematics Foundations] --> LA[Linear Algebra]
+    M --> PR[Probability & Statistics]
 
-    B --> B1[Vector Spaces & Subspaces]
-    B --> B2[Linear Mappings & Independence]
-    
-    C --> C1[Analytical Geometry Summary]
-    C --> C2[Norms, Inner Products & Distances]
+    LA --> V[01 Vector Spaces & Subspaces]
+    LA --> LM[02 Linear Mappings & Operators]
+    LA --> IP[03 Inner Products & Geometry]
+    LA --> MD[04 Matrix Decompositions]
 
-    D --> D1[Determinants & Trace]
-    D --> D2[Eigenvectors & Eigenspectrum]
-    D --> D3[Matrix Diagonalization]
-    D --> D4[Cholesky Decomposition]
-    D --> D5[Singular Value Decomposition]
-    D --> D6[Geometric Intuition of SVD]
+    PR --> PR1[Random Variables & Distributions]
+    PR --> PR2[PMF & CDF]
 ```

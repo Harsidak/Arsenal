@@ -1,4 +1,4 @@
-# 🔥 PyTorch
+﻿# 🔥 PyTorch
 
 > [!NOTE] Source Context
 > This note serves as the entry point for learning **PyTorch** in the Arsenal vault. It builds upon mathematical fundamentals of vector/matrix operations and details the library's role as a leading platform for deep learning prototyping and production.
@@ -54,7 +54,7 @@ loss.backward()  # Computes gradients for all leaf parameters automatically
 ---
 
 **Related Notes**:
-* [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]]
+* [[Vector Spaces]]
 * [[Linear Mappings]]
 * [[Tensors]]
 * [[Tensor Datatypes]]

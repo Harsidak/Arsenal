@@ -1,4 +1,4 @@
-# 📏 Lengths and Distances
+﻿# 📏 Lengths and Distances
 
 > [!NOTE] Source Context
 > This bridges the gap between the $\Omega$ engine of [[Inner product]]s and the tape measure of [[Norms]]. It establishes the physical limits of vector geometry used in machine learning.
@@ -39,4 +39,4 @@ The "agreement" between two things can *never* be bigger than their actual physi
 **Related Notes**:
 *   [[Inner product]]
 *   [[Norms]]
-*   [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]]
+*   [[Vector Spaces]]

@@ -1,4 +1,4 @@
-# 📦 Tensors
+﻿# 📦 Tensors
 
 > [!NOTE] Source Context
 > Tensors are the fundamental mathematical and computational data structures underpinning modern Deep Learning and AI systems. Originally stemming from linear algebra and physics, in machine learning **Tensors** are generalized multi-dimensional arrays optimized for fast hardware acceleration (GPUs/TPUs) and automatic differentiation.
@@ -65,7 +65,7 @@ In frameworks like PyTorch, tensors are not just static data arrays. They contai
 ---
 
 **Related Notes**:
-* [[ME/MATHEMATICS/Diseroth Notes/Linear Algebra/Vector Spaces]]
+* [[Vector Spaces]]
 * [[Linear Mappings]]
 * [[Pytorch]]
 * [[Tensor Datatypes]] 
