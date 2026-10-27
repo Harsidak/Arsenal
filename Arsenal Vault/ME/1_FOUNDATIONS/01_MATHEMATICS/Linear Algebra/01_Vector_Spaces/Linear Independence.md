@@ -1,4 +1,4 @@
-﻿# 📏 Linear Independence & Dependence
+# 📏 Linear Independence & Dependence
 
 > [!NOTE] Source Context
 > This concept is a core pillar of linear algebra, building directly on [[Vector Spaces]], and is adapted from [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]. In AI systems and sensor fusion architectures, identifying linear independence is the key to stripping out redundant coordinates, minimizing computation latency, and preventing singular matrices that break optimization.
@@ -93,7 +93,9 @@ When routing spatial data from the hardware sensors (accelerometers, gyroscopes,
 ---
 
 **Related Notes**:
+*   [[Span and Bases]] (Reachable territory & the Linear Dependence Lemma)
 *   [[Vector Spaces]] (The mathematical environment)
 *   [[Vector Subspaces]] (Slices of vector spaces)
 *   [[Linear Mappings]]
+*   [[BOOK - LINEAR ALGEBRA DONE RIGHT (Axler)]]
 *   [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]

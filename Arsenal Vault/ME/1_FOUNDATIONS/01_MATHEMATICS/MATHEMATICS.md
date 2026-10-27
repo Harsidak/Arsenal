@@ -12,7 +12,7 @@
 
 ### 1. Vector Spaces & Subspaces
 *   **Foundations:** [[Complex Numbers]], [[Groups]], [[Vector Spaces]], [[Vector Subspaces]]
-*   **Core Mechanics:** [[Linear Independence]]
+*   **Core Mechanics:** [[Linear Independence]], [[Span and Bases]]
 
 ### 2. Linear Mappings & Operators
 *   **Transformations:** [[Linear Mappings]], [[Symmetric, Definite and Positive Matrices]]
