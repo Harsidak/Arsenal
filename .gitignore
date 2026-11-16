@@ -69,5 +69,5 @@ LEARNING_CURVE/
 # AI Agents
 app_build/
 production_artifacts/
-.agents/
+.agents/protocol.md
 claude.md
