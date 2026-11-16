@@ -54,7 +54,5 @@ loss.backward()  # Computes gradients for all leaf parameters automatically
 ---
 
 **Related Notes**:
-* [[Vector Spaces]]
-* [[Linear Mappings]]
 * [[Tensors]]
 * [[Tensor Datatypes]]

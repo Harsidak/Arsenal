@@ -1,7 +1,7 @@
 # Cosine Similarity
 
 > [!NOTE] Context
-> Measures directional alignment between vectors, ignoring length. Extends [[Inner product]] and [[Lengths and Distances]] for text embeddings, [[RAG]], and search. Reference: [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]].
+> Measures directional alignment between vectors, ignoring length. Extends inner products and lengths/distances for text embeddings, [[RAG]], and search. Reference: [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]].
 
 ---
 
@@ -64,8 +64,5 @@ $$D_C(u, v) = 1 - S_C(u, v)$$
 ---
 
 **Related Notes**:
-* [[Inner product]]
-* [[Lengths and Distances]]
-* [[Norms]]
 * [[RAG]]
 * [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]]

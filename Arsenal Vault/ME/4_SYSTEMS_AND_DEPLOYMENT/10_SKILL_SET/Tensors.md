@@ -65,7 +65,5 @@ In frameworks like PyTorch, tensors are not just static data arrays. They contai
 ---
 
 **Related Notes**:
-* [[Vector Spaces]]
-* [[Linear Mappings]]
 * [[Pytorch]]
 * [[Tensor Datatypes]] 

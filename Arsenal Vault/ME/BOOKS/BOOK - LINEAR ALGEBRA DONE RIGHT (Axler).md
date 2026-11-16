@@ -4,7 +4,6 @@
 
 - **Author**: Sheldon Axler
 - **Subject**: Pure & Abstract Linear Algebra, Operator Theory
-- **Vault Location**: [[Arsenal Vault/ME/1_FOUNDATIONS/01_MATHEMATICS/Linear Algebra]]
 
 ---
 
@@ -34,7 +33,4 @@
 ---
 
 ## 🔗 Connected Vault Notes
-- [[Vector Spaces]] — Formal algebraic axioms and operator domain
-- [[Linear Independence]] — Non-redundant representations and dimension
-- [[Linear Mappings]] — Operators and homomorphisms between spaces
 - [[BOOK - MATHEMATICS FOR MACHINE LEARNING (Deisenroth)]] — Computational counterpart to Axler's abstract theory
